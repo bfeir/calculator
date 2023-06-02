@@ -2,36 +2,36 @@ class Calculator {
     constructor(previousOperandTextElement, currentOperandTextElement) {
         this.previousOperandTextElement = previousOperandTextElement;
         this.currentOperandTextElement = currentOperandTextElement;
-        this.clear();
+        this.clearAllDisplay();
     }
 
 
-    clear() {
+    clearAllDisplay() {
         this.currentOperand = ""
         this.previousOperand = ""
         this.operation = undefined
     }
 
-    delete() {
+    deleteTheLastNumberDisplayed() {
         this.currentOperand = this.currentOperand.toString().slice(0, -1)
     }
 
-    appendNumber(number) {
+    appendNumberInputByUser(number) {
         if (number === "." && this.currentOperand.includes('.')) return;
         this.currentOperand = this.currentOperand.toString() + number.toString();
     }
 
-    chooseOperation(operation) {
+    chooseCalculatorOperation(operation) {
         if (this.currentOperand === '') return;
         if (this.previousOperand !== '') {
-            this.compute();
+            this.computeMathematicFormula();
         }
         this.operation = operation
         this.previousOperand = this.currentOperand
         this.currentOperand = ''
     }
 
-    compute() {
+    computeMathematicFormula() {
         let computation;
         const prev = parseFloat(this.previousOperand);
         const current = parseFloat(this.currentOperand);
@@ -57,7 +57,7 @@ class Calculator {
         this.previousOperand = ''
     }
 
-    getDisplayNumber(number) {
+    getCurrentNumberWithEnglishNorms(number) {
         const stringNumber = number.toString();
         const integerDigits = parseFloat(stringNumber.split('.')[0]);
         const decimalDigits = stringNumber.split('.')[1];
@@ -75,8 +75,8 @@ class Calculator {
         }
     }
 
-    updateDisplay() {
-        this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand)
+    updateDisplayOfCalculator() {
+        this.currentOperandTextElement.innerText = this.getCurrentNumberWithEnglishNorms(this.currentOperand)
         if(this.operation != null) {
             this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`   
         } else {
@@ -98,29 +98,29 @@ const calculator = new Calculator(previousOperandTextElement, currentOperandText
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
-        calculator.appendNumber(button.innerText)
-        calculator.updateDisplay()
+        calculator.appendNumberInputByUser(button.innerText)
+        calculator.updateDisplayOfCalculator()
     })
 })
 
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
-        calculator.chooseOperation(button.innerText)
-        calculator.updateDisplay()
+        calculator.chooseCalculatorOperation(button.innerText)
+        calculator.updateDisplayOfCalculator()
     })
 })
 
 equalsButton.addEventListener('click', () => {
-    calculator.compute()
-    calculator.updateDisplay()
+    calculator.computeMathematicFormula()
+    calculator.updateDisplayOfCalculator()
 })
 
 allClearButton.addEventListener('click', () => {
-    calculator.clear()
-    calculator.updateDisplay()
+    calculator.clearAllDisplay()
+    calculator.updateDisplayOfCalculator()
 })
 
 deleteButton.addEventListener('click', () => {
-    calculator.delete()
-    calculator.updateDisplay()
+    calculator.deleteTheLastNumberDisplayed()
+    calculator.updateDisplayOfCalculator()
 })
