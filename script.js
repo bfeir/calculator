@@ -57,7 +57,7 @@ class Calculator {
         this.previousOperand = ''
     }
 
-    getCurrentNumberWithEnglishNorms(number) {
+    getCurrentNumberDisplayedWithDecimalDigits(number) {
         const stringNumber = number.toString();
         const integerDigits = parseFloat(stringNumber.split('.')[0]);
         const decimalDigits = stringNumber.split('.')[1];
@@ -76,7 +76,7 @@ class Calculator {
     }
 
     updateDisplayOfCalculator() {
-        this.currentOperandTextElement.innerText = this.getCurrentNumberWithEnglishNorms(this.currentOperand)
+        this.currentOperandTextElement.innerText = this.getCurrentNumberDisplayedWithDecimalDigits(this.currentOperand)
         if(this.operation != null) {
             this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`   
         } else {
